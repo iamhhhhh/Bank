@@ -12,14 +12,12 @@ namespace Bank.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Transfer
+    public partial class Deposit
     {
-        public int TransferID { get; set; }
-        public Nullable<int> TransferFrom { get; set; }
-        public Nullable<decimal> TranferMoney { get; set; }
-        public Nullable<int> TransferTo { get; set; }
+        public int DepositID { get; set; }
+        public Nullable<int> Depositnumber { get; set; }
+        public Nullable<decimal> DepositAmount { get; set; }
     
         public virtual Account Account { get; set; }
-        public virtual Account Account1 { get; set; }
     }
 }

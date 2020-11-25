@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Bank.Models.Transfer>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TranferMoney)
+        </th>
+        <th>
+            <P>Transfer From</P>
+        </th>
+        <th>
+            <P>Transfer To</P>
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TranferMoney)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Account.AccountName )
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Account1.AccountName)
+        </td>
+        <td>
+        
+            @Html.ActionLink("Details", "Details", new { id=item.TransferID }) |
+        </td>
+    </tr>
+}
+
+</table>

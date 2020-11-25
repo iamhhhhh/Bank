@@ -14,18 +14,86 @@
           <Property Name="Balance" Type="money" />
           <Property Name="IBAN" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Deposit">
+          <Key>
+            <PropertyRef Name="DepositID" />
+          </Key>
+          <Property Name="DepositID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Depositnumber" Type="int" />
+          <Property Name="DepositAmount" Type="money" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="Transfer">
           <Key>
             <PropertyRef Name="TransferID" />
           </Key>
-          <Property Name="TransferID" Type="int" Nullable="false" />
+          <Property Name="TransferID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TransferFrom" Type="int" />
           <Property Name="TranferMoney" Type="money" />
           <Property Name="TransferTo" Type="int" />
         </EntityType>
+        <Association Name="FK_Deposit_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Deposit" Type="Self.Deposit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountNumber" />
+            </Principal>
+            <Dependent Role="Deposit">
+              <PropertyRef Name="Depositnumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transfer_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Transfer" Type="Self.Transfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountNumber" />
+            </Principal>
+            <Dependent Role="Transfer">
+              <PropertyRef Name="TransferFrom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transfer_Account1">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Transfer" Type="Self.Transfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountNumber" />
+            </Principal>
+            <Dependent Role="Transfer">
+              <PropertyRef Name="TransferTo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="BankModelStoreContainer">
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Deposit" EntityType="Self.Deposit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transfer" EntityType="Self.Transfer" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Deposit_Account" Association="Self.FK_Deposit_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Deposit" EntitySet="Deposit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transfer_Account" Association="Self.FK_Transfer_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Transfer" EntitySet="Transfer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transfer_Account1" Association="Self.FK_Transfer_Account1">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Transfer" EntitySet="Transfer" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -39,21 +107,95 @@
           <Property Name="AccountName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Balance" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="IBAN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Deposits" Relationship="BankModel.FK_Deposit_Account" FromRole="Account" ToRole="Deposit" />
+          <NavigationProperty Name="Transfers" Relationship="BankModel.FK_Transfer_Account" FromRole="Account" ToRole="Transfer" />
+          <NavigationProperty Name="Transfers1" Relationship="BankModel.FK_Transfer_Account1" FromRole="Account" ToRole="Transfer" />
+          </EntityType>
+        <EntityContainer Name="BankEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="Deposits" EntityType="BankModel.Deposit" />
+          <EntitySet Name="sysdiagrams" EntityType="BankModel.sysdiagram" />
+          <AssociationSet Name="FK_Deposit_Account" Association="BankModel.FK_Deposit_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Deposit" EntitySet="Deposits" />
+          </AssociationSet>
+          <EntitySet Name="Transfers" EntityType="BankModel.Transfer" />
+          <AssociationSet Name="FK_Transfer_Account" Association="BankModel.FK_Transfer_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Transfer" EntitySet="Transfers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transfer_Account1" Association="BankModel.FK_Transfer_Account1">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Transfer" EntitySet="Transfers" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Deposit">
+          <Key>
+            <PropertyRef Name="DepositID" />
+          </Key>
+          <Property Name="DepositID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Depositnumber" Type="Int32" />
+          <Property Name="DepositAmount" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Account" Relationship="BankModel.FK_Deposit_Account" FromRole="Deposit" ToRole="Account" />
         </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Deposit_Account">
+          <End Type="BankModel.Account" Role="Account" Multiplicity="0..1" />
+          <End Type="BankModel.Deposit" Role="Deposit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountNumber" />
+            </Principal>
+            <Dependent Role="Deposit">
+              <PropertyRef Name="Depositnumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="Transfer">
           <Key>
             <PropertyRef Name="TransferID" />
           </Key>
-          <Property Name="TransferID" Type="Int32" Nullable="false" />
+          <Property Name="TransferID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TransferFrom" Type="Int32" />
           <Property Name="TranferMoney" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="TransferTo" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="BankModel.FK_Transfer_Account" FromRole="Transfer" ToRole="Account" />
+          <NavigationProperty Name="Account1" Relationship="BankModel.FK_Transfer_Account1" FromRole="Transfer" ToRole="Account" />
         </EntityType>
-        <EntityContainer Name="BankEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Accounts" EntityType="Self.Account" />
-          <EntitySet Name="Transfers" EntityType="Self.Transfer" />
-        </EntityContainer>
-      </Schema>
+        <Association Name="FK_Transfer_Account">
+          <End Type="BankModel.Account" Role="Account" Multiplicity="0..1" />
+          <End Type="BankModel.Transfer" Role="Transfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountNumber" />
+            </Principal>
+            <Dependent Role="Transfer">
+              <PropertyRef Name="TransferFrom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transfer_Account1">
+          <End Type="BankModel.Account" Role="Account" Multiplicity="0..1" />
+          <End Type="BankModel.Transfer" Role="Transfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountNumber" />
+            </Principal>
+            <Dependent Role="Transfer">
+              <PropertyRef Name="TransferTo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -69,13 +211,33 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Deposits">
+            <EntityTypeMapping TypeName="BankModel.Deposit">
+              <MappingFragment StoreEntitySet="Deposit">
+                <ScalarProperty Name="DepositAmount" ColumnName="DepositAmount" />
+                <ScalarProperty Name="Depositnumber" ColumnName="Depositnumber" />
+                <ScalarProperty Name="DepositID" ColumnName="DepositID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="BankModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Transfers">
             <EntityTypeMapping TypeName="BankModel.Transfer">
               <MappingFragment StoreEntitySet="Transfer">
-                <ScalarProperty Name="TransferID" ColumnName="TransferID" />
-                <ScalarProperty Name="TransferFrom" ColumnName="TransferFrom" />
-                <ScalarProperty Name="TranferMoney" ColumnName="TranferMoney" />
                 <ScalarProperty Name="TransferTo" ColumnName="TransferTo" />
+                <ScalarProperty Name="TranferMoney" ColumnName="TranferMoney" />
+                <ScalarProperty Name="TransferFrom" ColumnName="TransferFrom" />
+                <ScalarProperty Name="TransferID" ColumnName="TransferID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

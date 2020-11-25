@@ -10,111 +10,124 @@ using Bank.Models;
 
 namespace Bank.Controllers
 {
-    public class AccountsController : Controller
+    public class DepositsController : Controller
     {
         private BankEntities db = new BankEntities();
 
-        // GET: Accounts
+        // GET: Deposits
         public ActionResult Index()
         {
-            return View(db.Accounts.ToList());
+            var deposits = db.Deposits.Include(d => d.Account);
+            return View(deposits.ToList());
         }
 
-        // GET: Accounts/Details/5
+        // GET: Deposits/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Account account = db.Accounts.Find(id);
-            if (account == null)
+            Deposit deposit = db.Deposits.Find(id);
+            if (deposit == null)
             {
                 return HttpNotFound();
             }
-            return View(account);
+            return View(deposit);
         }
 
-        // GET: Accounts/Create
+        // GET: Deposits/Create
         public ActionResult Create()
         {
+            ViewBag.Depositnumber = new SelectList(db.Accounts, "AccountNumber", "AccountName");
             return View();
         }
 
-        // POST: Accounts/Create
+        // POST: Deposits/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AccountNumber,AccountName,Balance,IBAN")] Account account)
+        public ActionResult Create([Bind(Include = "DepositID,Depositnumber,DepositAmount")] Deposit deposit)
         {
             if (ModelState.IsValid)
             {
-                account = Depositmoney(account);
-                db.Accounts.Add(account);
+                var account = db.Accounts.Where(x => x.AccountNumber == deposit.Depositnumber).FirstOrDefault();
+                deposit.Account = account;
+                deposit = Checkbalanceandgetdeposit(deposit);
+
+
+                db.Deposits.Add(deposit);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(account);
+
+            ViewBag.Depositnumber = new SelectList(db.Accounts, "AccountNumber", "AccountName", deposit.Depositnumber);
+            return View(deposit);
         }
-        public static Account Depositmoney(Account income)
+
+        public static Deposit Checkbalanceandgetdeposit(Deposit deposit)
         {
-            income.Balance = income.Balance - (income.Balance.GetValueOrDefault() * 1 / 1000);
-            return income;
+            deposit.DepositAmount = deposit.DepositAmount - (deposit.DepositAmount.GetValueOrDefault() * 1 / 1000);
+            deposit.Account.Balance = deposit.Account.Balance + deposit.DepositAmount;
+
+            return deposit;
         }
-        // GET: Accounts/Edit/5
+        // GET: Deposits/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Account account = db.Accounts.Find(id);
-            if (account == null)
+            Deposit deposit = db.Deposits.Find(id);
+            if (deposit == null)
             {
                 return HttpNotFound();
             }
-            return View(account);
+            ViewBag.Depositnumber = new SelectList(db.Accounts, "AccountNumber", "AccountName", deposit.Depositnumber);
+            return View(deposit);
         }
 
-        // POST: Accounts/Edit/5
+        // POST: Deposits/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AccountNumber,AccountName,Balance,IBAN")] Account account)
+        public ActionResult Edit([Bind(Include = "DepositID,Depositnumber,DepositAmount")] Deposit deposit)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(account).State = EntityState.Modified;
+                db.Entry(deposit).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(account);
+            ViewBag.Depositnumber = new SelectList(db.Accounts, "AccountNumber", "AccountName", deposit.Depositnumber);
+            return View(deposit);
         }
 
-        // GET: Accounts/Delete/5
+        // GET: Deposits/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Account account = db.Accounts.Find(id);
-            if (account == null)
+            Deposit deposit = db.Deposits.Find(id);
+            if (deposit == null)
             {
                 return HttpNotFound();
             }
-            return View(account);
+            return View(deposit);
         }
 
-        // POST: Accounts/Delete/5
+        // POST: Deposits/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Account account = db.Accounts.Find(id);
-            db.Accounts.Remove(account);
+            Deposit deposit = db.Deposits.Find(id);
+            db.Deposits.Remove(deposit);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

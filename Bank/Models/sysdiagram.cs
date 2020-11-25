@@ -12,14 +12,12 @@ namespace Bank.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Transfer
+    public partial class sysdiagram
     {
-        public int TransferID { get; set; }
-        public Nullable<int> TransferFrom { get; set; }
-        public Nullable<decimal> TranferMoney { get; set; }
-        public Nullable<int> TransferTo { get; set; }
-    
-        public virtual Account Account { get; set; }
-        public virtual Account Account1 { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

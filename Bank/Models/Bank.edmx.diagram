@@ -6,8 +6,13 @@
     <edmx:Diagrams>
       <Diagram DiagramId="d95eaa94d27b4fe8b47b2f65b8bfdb20" Name="Diagram1">
         <EntityTypeShape EntityType="BankModel.Account" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BankModel.Transfer" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-      </Diagram>
+        <EntityTypeShape EntityType="BankModel.Deposit" Width="1.5" PointX="5.125" PointY="0.75" />
+        <EntityTypeShape EntityType="BankModel.sysdiagram" Width="1.5" PointX="3.375" PointY="3.75" />
+        <AssociationConnector Association="BankModel.FK_Deposit_Account" />
+        <EntityTypeShape EntityType="BankModel.Transfer" Width="1.5" PointX="3" PointY="6.875" />
+        <AssociationConnector Association="BankModel.FK_Transfer_Account" />
+        <AssociationConnector Association="BankModel.FK_Transfer_Account1" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BankModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BankModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="AccountNumber" />
@@ -12,7 +12,7 @@
           <Property Name="AccountNumber" Type="int" Nullable="false" />
           <Property Name="AccountName" Type="varchar" MaxLength="50" />
           <Property Name="Balance" Type="money" />
-          <Property Name="IBAN" Type="char" MaxLength="18" />
+          <Property Name="IBAN" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Transfer">
           <Key>
@@ -27,8 +27,7 @@
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transfer" EntityType="Self.Transfer" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BankModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -39,7 +38,7 @@
           <Property Name="AccountNumber" Type="Int32" Nullable="false" />
           <Property Name="AccountName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Balance" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="IBAN" Type="String" MaxLength="18" FixedLength="true" Unicode="false" />
+          <Property Name="IBAN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Transfer">
           <Key>

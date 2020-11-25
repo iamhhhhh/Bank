@@ -1,5 +1,6 @@
 function display() {
-    var e = "Netherlands"
+    var e = document.getElementById("country_input").value;
+    console.log(e);
     updateUrl("?country="+e);
     var country_input = e;
     var how = buildIbans(country_input);
@@ -15,7 +16,7 @@ function getParameterByName(name, url) {
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
+}   
 
 function updateUrl(url_extension){
     window.history.pushState('page2', 'Title', '/'+url_extension);

@@ -38,7 +38,7 @@ var Portugal_sort = ["00350651"]
 
 
 function num_gen3(span) {
-	var num2 = chance.string({length: span, pool: '123456789'});
+	var num2 = chance.string({ length: span, pool: '123456789' });
 	return num2;
 }
 

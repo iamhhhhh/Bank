@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -18,7 +17,6 @@ namespace Bank.Controllers
         // GET: Accounts
         public ActionResult Index()
         {
-            
             return View(db.Accounts.ToList());
         }
 
@@ -40,7 +38,6 @@ namespace Bank.Controllers
         // GET: Accounts/Create
         public ActionResult Create()
         {
-            
             return View();
         }
 
@@ -70,7 +67,7 @@ namespace Bank.Controllers
             }
             Account account = db.Accounts.Find(id);
             if (account == null)
-            { 
+            {
                 return HttpNotFound();
             }
             return View(account);

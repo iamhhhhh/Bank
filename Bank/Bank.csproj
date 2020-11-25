@@ -161,8 +161,11 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\chance.min.js" />
     <Content Include="Content\countries.js" />
     <Content Include="Content\functions.js" />
+    <Content Include="Content\jquery.min.js" />
+    <Content Include="Content\lodash.min.js" />
     <Content Include="Content\mapp4.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -220,7 +223,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

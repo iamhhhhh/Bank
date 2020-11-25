@@ -7,72 +7,165 @@
 
 <h2>Create</h2>
 
-
-@using (Html.BeginForm())
+@using (Html.BeginForm()) 
 {
-
     @Html.AntiForgeryToken()
-    <link rel="stylesheet" type="text/css" href="/static/sample.css">
-    <meta name="viewport" content="initial-scale=1" />
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script type="text/javascript" src="http://chancejs.com/chance.min.js"></script>
-    <script src="~/Content/functions.js"></script>
-    <script src="~/Content/mapp4.js"></script>
-    <script src="~/Content/countries.js"></script>
-    <div class="form-horizontal">
-        <h4>Account</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.AccountNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AccountNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AccountNumber, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AccountName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AccountName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AccountName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Balance, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Balance, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Balance, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <select id="country_input" align="middle" onchange="display(this.value);">
-            <option value="Netherlands" id="country_Netherlands">Netherlands</option>
-        </select>
-        <div class="form-group">
-            @Html.LabelFor(model => model.IBAN, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(x => x.IBAN, new { id = "IBAN" })
-               
-                @Html.ValidationMessageFor(model => model.IBAN, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+    
+<div class="form-horizontal">
+    <h4>Account</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.AccountNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.AccountNumber, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.AccountNumber, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.AccountName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.AccountName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.AccountName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Balance, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Balance, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Balance, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Balance,"Country", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select id="country_input" align="middle" onchange="display(this.value)">
+                <option value="Albania" id="country_Albania">Albania</option>
+                <option value="Algeria" id="country_Algeria">Algeria</option>
+                <option value="Andorra" id="country_Andorra">Andorra</option>
+                <option value="Angola" id="country_Angola">Angola</option>
+                <option value="Austria" id="country_Austria">Austria</option>
+                <option value="Azerbaijan" id="country_Azerbaijan">Azerbaijan</option>
+                <option value="Bahrain" id="country_Bahrain">Bahrain</option>
+                <option value="Belgium" id="country_Belgium">Belgium</option>
+                <option value="Benin" id="country_Benin">Benin</option>
+                <option value="Bosnia" id="country_Bosnia">Bosnia</option>
+                <option value="Brazil" id="country_Brazil">Brazil</option>
+                <option value="Bulgaria" id="country_Bulgaria">Bulgaria</option>
+                <option value="Burkina_Faso" id="country_Burkina_Faso">Burkina Faso</option>
+                <option value="Burundi" id="country_Burundi">Burundi</option>
+                <option value="Cameroon" id="country_Cameroon">Cameroon</option>
+                <option value="Cape_Verde" id="country_Cape_Verde">Cape Verde</option>
+                <option value="Chad" id="country_Chad">Chad</option>
+                <option value="Comoros" id="country_Comoros">Comoros</option>
+                <option value="Congo" id="country_Congo">Congo</option>
+                <option value="Costa_rica" id="country_Costa_rica">Costa rica</option>
+                <option value="Croatia" id="country_Croatia">Croatia</option>
+                <option value="Cyprus" id="country_Cyprus">Cyprus</option>
+                <option value="Czechia" id="country_Czechia">Czechia</option>
+                <option value="Denmark" id="country_Denmark">Denmark</option>
+                <option value="Dominicana" id="country_Dominicana">Dominicana</option>
+                <option value="Egypt" id="country_Egypt">Egypt</option>
+                <option value="Estonia" id="country_Estonia">Estonia</option>
+                <option value="Faroe_Islands" id="country_Faroe_Islands">Faroe Islands</option>
+                <option value="Finland" id="country_Finland">Finland</option>
+                <option value="France" id="country_France">France</option>
+                <option value="Gabon" id="country_Gabon">Gabon</option>
+                <option value="Georgia" id="country_Georgia">Georgia</option>
+                <option value="Germany" id="country_Germany">Germany</option>
+                <option value="Gibraltar" id="country_Gibraltar">Gibraltar</option>
+                <option value="Greece" id="country_Greece">Greece</option>
+                <option value="Greenland" id="country_Greenland">Greenland</option>
+                <option value="Guatemala" id="country_Guatemala">Guatemala</option>
+                <option value="Honduras" id="country_Honduras">Honduras</option>
+                <option value="Hungary" id="country_Hungary">Hungary</option>
+                <option value="Iceland" id="country_Iceland">Iceland</option>
+                <option value="Iran" id="country_Iran">Iran</option>
+                <option value="Ireland" id="country_Ireland">Ireland</option>
+                <option value="Israel" id="country_Israel">Israel</option>
+                <option value="Italy" id="country_Italy">Italy</option>
+                <option value="Ivory_Coast" id="country_Ivory_Coast">Ivory Coast</option>
+                <option value="Jordan" id="country_Jordan">Jordan</option>
+                <option value="Kazakhstan" id="country_Kazakhstan">Kazakhstan</option>
+                <option value="Kuwait" id="country_Kuwait">Kuwait</option>
+                <option value="Lebanon" id="country_Lebanon">Lebanon</option>
+                <option value="Liechtenstein" id="country_Liechtenstein">Liechtenstein</option>
+                <option value="Lithuania" id="country_Lithuania">Lithuania</option>
+                <option value="Luxembourg" id="country_Luxembourg">Luxembourg</option>
+                <option value="Macedonia" id="country_Macedonia">Macedonia</option>
+                <option value="Madagascar" id="country_Madagascar">Madagascar</option>
+                <option value="Mali" id="country_Mali">Mali</option>
+                <option value="Malta" id="country_Malta">Malta</option>
+                <option value="Mauritania" id="country_Mauritania">Mauritania</option>
+                <option value="Mauritius" id="country_Mauritius">Mauritius</option>
+                <option value="Moldova" id="country_Moldova">Moldova</option>
+                <option value="Monaco" id="country_Monaco">Monaco</option>
+                <option value="Montenegro" id="country_Montenegro">Montenegro</option>
+                <option value="Morocco" id="country_Morocco">Morocco</option>
+                <option value="Mozambique" id="country_Mozambique">Mozambique</option>
+                <option value="Netherlands" id="country_Netherlands">Netherlands</option>
+                <option value="Nicuragua" id="country_Nicuragua">Nicuragua</option>
+                <option value="Niger" id="country_Niger">Niger</option>
+                <option value="Norway" id="country_Norway">Norway</option>
+                <option value="Pakistan" id="country_Pakistan">Pakistan</option>
+                <option value="Poland" id="country_Poland">Poland</option>
+                <option value="Palestine" id="country_Palestine">Palestine</option>
+                <option value="Portugal" id="country_Portugal">Portugal</option>
+                <option value="Qatar" id="country_Qatar">Qatar</option>
+                <option value="Kosovo" id="country_Kosovo">Kosovo</option>
+                <option value="Romania" id="country_Romania">Romania</option>
+                <option value="Saint_Lucia" id="country_Saint_Lucia">Saint Lucia</option>
+                <option value="San_Marino" id="country_San_Marino">San Marino</option>
+                <option value="Sao_Tome_Principe" id="country_Sao_Tome_Principe">Sao Tome Principe</option>
+                <option value="Saudi" id="country_Saudi">Saudi</option>
+                <option value="Senegal" id="country_Senegal">Senegal</option>
+                <option value="Seychelles" id="country_Seychelles">Seychelles</option>
+                <option value="Slovakia" id="country_Slovakia">Slovakia</option>
+                <option value="Slovenia" id="country_Slovenia">Slovenia</option>
+                <option value="Spain" id="country_Spain">Spain</option>
+                <option value="Sweden" id="country_Sweden">Sweden</option>
+                <option value="Switzerland" id="country_Switzerland">Switzerland</option>
+                <option value="Timor_Leste" id="country_Timor_Leste">Timor Leste</option>
+                <option value="Togo" id="country_Togo">Togo</option>
+                <option value="Tunisia" id="country_Tunisia">Tunisia</option>
+                <option value="Turkey" id="country_Turkey">Turkey</option>
+                <option value="Ukraine" id="country_Ukraine">Ukraine</option>
+                <option value="UAE" id="country_UAE">UAE</option>
+                <option value="UK" id="country_UK">UK</option>
+                <option value="Virgin_Islands" id="country_Virgin_Islands">Virgin Islands</option>
+            </select>
+        </div>
+    </div>
+    
+
+
+    <link rel="stylesheet" type="text/css" href="/static/sample.css">
+    <script src="~/Content/lodash.min.js"></script>
+    <script src="~/Content/jquery.min.js"></script>
+    <script src="~/Content/chance.min.js"></script>
+    <script src="~/Content/countries.js"></script>
+    <script src="~/Content/functions.js"></script>
+    <script src="~/Content/mapp4.js"></script>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.IBAN, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.IBAN, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.IBAN, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
 }
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
